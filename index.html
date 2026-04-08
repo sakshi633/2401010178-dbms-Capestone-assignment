@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CityCare Hospital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/style.css" />
+</head>
+<body>
+  <section class="auth-shell" id="authShell">
+    <div class="auth-card">
+      <h2>Welcome to CityCare HMS</h2>
+      <p class="auth-subtitle">Login or create an account to continue.</p>
+      <div class="auth-tabs">
+        <button id="showLoginBtn" class="auth-tab active">Login</button>
+        <button id="showRegisterBtn" class="auth-tab">Register</button>
+      </div>
+
+      <div id="loginPanel" class="auth-panel active">
+        <label>
+          Email
+          <input type="email" id="loginEmail" placeholder="you@example.com" />
+        </label>
+        <label>
+          Password
+          <input type="password" id="loginPassword" placeholder="Enter password" />
+        </label>
+        <button class="action-btn" id="loginBtn">Login</button>
+      </div>
+
+      <div id="registerPanel" class="auth-panel">
+        <label>
+          Full Name
+          <input type="text" id="registerName" placeholder="Your full name" />
+        </label>
+        <label>
+          Email
+          <input type="email" id="registerEmail" placeholder="you@example.com" />
+        </label>
+        <label>
+          Password
+          <input type="password" id="registerPassword" placeholder="At least 6 characters" />
+        </label>
+        <button class="action-btn" id="registerBtn">Create Account</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="appShell" class="app-shell hidden">
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-icon">🏥</span>
+      <div>
+        <h1>CityCare Hospital</h1>
+        <p class="subtitle">Management Dashboard</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <p class="status-pill" id="apiStatus">API: checking...</p>
+      <p class="user-pill" id="currentUser">Guest</p>
+      <button class="secondary-btn logout-btn" id="logoutBtn">Logout</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h2>One place to manage patients, appointments, and treatment records.</h2>
+      <p>Use the tabs below to switch between actions.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <section class="kpis">
+      <article class="kpi">
+        <p>Total Patients</p>
+        <h3 id="kpiPatients">0</h3>
+      </article>
+      <article class="kpi">
+        <p>Total Appointments</p>
+        <h3 id="kpiAppointments">0</h3>
+      </article>
+      <article class="kpi">
+        <p>Total Treatments</p>
+        <h3 id="kpiTreatments">0</h3>
+      </article>
+    </section>
+
+    <nav class="tabs">
+      <button class="tab-btn active" data-target="patient">Add Patient</button>
+      <button class="tab-btn" data-target="appointment">Book Appointment</button>
+      <button class="tab-btn" data-target="treatment">Add Treatment</button>
+      <button class="tab-btn" data-target="view">View Patients</button>
+      <button class="tab-btn" data-target="appointmentsView">View Appointments</button>
+      <button class="tab-btn" data-target="treatmentsView">View Treatments</button>
+    </nav>
+
+    <section id="patient" class="card active">
+      <h3>Add New Patient</h3>
+      <div class="grid">
+        <label>
+          Full Name
+          <input type="text" id="pname" placeholder="e.g. Aisha Sharma" />
+        </label>
+        <label>
+          Age
+          <input type="number" id="page" min="1" max="120" placeholder="e.g. 35" />
+        </label>
+        <label>
+          Gender
+          <select id="pgender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
+        <label>
+          Phone Number
+          <input type="tel" id="pphone" placeholder="10-digit phone number" />
+        </label>
+      </div>
+      <button class="action-btn" id="addPatientBtn">Add Patient</button>
+    </section>
+
+    <section id="appointment" class="card">
+      <h3>Book Appointment</h3>
+      <div class="grid">
+        <label>
+          Patient ID
+          <input type="number" id="apatient" min="1" placeholder="e.g. 101" />
+        </label>
+        <label>
+          Doctor ID
+          <input type="number" id="adoctor" min="1" placeholder="e.g. 12" />
+        </label>
+        <label>
+          Date
+          <input type="date" id="adate" />
+        </label>
+      </div>
+      <button class="action-btn" id="bookAppointmentBtn">Book Appointment</button>
+    </section>
+
+    <section id="treatment" class="card">
+      <h3>Add Treatment Record</h3>
+      <div class="grid">
+        <label>
+          Patient ID
+          <input type="number" id="tpatient" min="1" placeholder="e.g. 101" />
+        </label>
+        <label class="span-2">
+          Treatment Description
+          <input type="text" id="tdesc" placeholder="e.g. Blood test and medication" />
+        </label>
+        <label>
+          Cost
+          <input type="number" id="tcost" min="0" placeholder="e.g. 1200" />
+        </label>
+      </div>
+      <button class="action-btn" id="addTreatmentBtn">Add Treatment</button>
+    </section>
+
+    <section id="view" class="card">
+      <div class="view-header">
+        <h3>All Patients</h3>
+        <button class="secondary-btn" id="loadPatientsBtn">Refresh</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Age</th>
+              <th>Gender</th>
+              <th>Phone</th>
+            </tr>
+          </thead>
+          <tbody id="patientTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="appointmentsView" class="card">
+      <div class="view-header">
+        <h3>All Appointments</h3>
+        <button class="secondary-btn" id="loadAppointmentsBtn">Refresh</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Appointment ID</th>
+              <th>Patient ID</th>
+              <th>Doctor ID</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="appointmentTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="treatmentsView" class="card">
+      <div class="view-header">
+        <h3>All Treatments</h3>
+        <button class="secondary-btn" id="loadTreatmentsBtn">Refresh</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Treatment ID</th>
+              <th>Patient ID</th>
+              <th>Description</th>
+              <th>Cost</th>
+            </tr>
+          </thead>
+          <tbody id="treatmentTable"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 CityCare Hospital | Built for your DBMS project</p>
+  </footer>
+  </div>
+
+  <script src="./assets/script.js"></script>
+</body>
+</html>
