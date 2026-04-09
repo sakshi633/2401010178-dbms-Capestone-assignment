@@ -98,7 +98,6 @@ This repo already includes `Dockerfile` and `render.yaml`.
 
 - Current database is SQLite (`backend/hospital.db`), which may reset on free cloud instances.
 - For long-term production data, switch to a managed database (PostgreSQL/MySQL).
-
 ## Deploy on GitHub Pages (Frontend Demo Mode)
 
 GitHub Pages cannot run Python backend.  
